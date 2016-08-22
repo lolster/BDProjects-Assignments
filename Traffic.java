@@ -22,12 +22,9 @@ public class Traffic {
       
     public void map(Object key, Text value, Context context
                     ) throws IOException, InterruptedException {
-      /*StringTokenizer itr = new StringTokenizer(value.toString(), ",");
-      while (itr.hasMoreTokens()) {
-        word.set(itr.nextToken());
-        context.write(word, one);
-      }*/
+      // Split of csv file into tockRecord array
       String[] tockRecord = value.toString().split(",");
+      // Regex to select the records of intrest 
       if(tockRecord[5].matches("2014-08-..T08:..:..")) {
         context.write(new Text(tockRecord[8]), new IntWritable(Integer.parseInt(tockRecord[6])));
       }
@@ -37,7 +34,6 @@ public class Traffic {
   public static class IntSumReducer 
        extends Reducer<Text,IntWritable,Text,IntWritable> {
     private int max = 0;
-    //private IntWritable result = new IntWritable();
     private Text maxFile = new Text();
     
     public void reduce(Text key, Iterable<IntWritable> values, 
@@ -47,9 +43,8 @@ public class Traffic {
       for (IntWritable val : values) {
         sum += val.get();
       }
+      // Selecting the record with maximum traffic
       if(sum > max) {
-        //result.set(sum);
-        //context.write(key, result);
         max = sum;
         maxFile.set(key);
       }
