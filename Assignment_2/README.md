@@ -2,6 +2,7 @@
 
 This code performs page ranking on a set of nodes with hyperlinks.  
 Provided are two implementations of page rank, `Page_Rank_1` and `Page_Rank_2`.  
+
 -----------------------------  
 ## Authors
 ```
